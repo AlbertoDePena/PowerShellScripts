@@ -6,6 +6,8 @@
 .PARAMETER PackageOutputDir
 
 .PARAMETER ArtifactsOutputDir
+
+.PARAMETER Version
 #>
 Param(
     [Parameter(Mandatory=$true)] 
@@ -18,7 +20,11 @@ Param(
 
     [Parameter(Mandatory=$true)] 
     [String]
-	$ArtifactsOutputDir
+	$ArtifactsOutputDir,
+
+    [Parameter(Mandatory=$true)] 
+    [String]
+	$Version
 )
 try
 {
@@ -26,15 +32,10 @@ try
     Write-Output "--               project.json: $ProjectJson"
     Write-Output "--   Package Output Directory: $PackageOutputDir"
     Write-Output "-- Artifacts Output Directory: $ArtifactsOutputDir"
+    Write-Output "--                    Version: $Version"
     Write-Output ''
 
-    $now = [System.DateTime]::UtcNow
-    $date = New-Object System.DateTime(1970, 1, 1)
-    $version = ($now - $date).TotalMilliseconds
-
-    $version = $version.ToString().Remove(13)
-   
-    & dotnet pack "$ProjectJson" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "ci-$version" -c Release
+    & dotnet pack "$ProjectJson" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "rc-$Version" -c Release
 
     $exitCode = 0
 }
