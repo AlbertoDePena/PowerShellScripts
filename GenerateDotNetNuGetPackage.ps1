@@ -31,8 +31,10 @@ try
     $now = [System.DateTime]::UtcNow
     $date = New-Object System.DateTime(1970, 1, 1)
     $version = ($now - $date).TotalMilliseconds
+
+    $version = $version.ToString().Remove(13)
    
-    & dotnet pack "$ProjectJson" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "ci-($version)" -c Release
+    & dotnet pack "$ProjectJson" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "ci-$version" -c Release
 
     $exitCode = 0
 }
