@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
   Generate DotNet NuGet package.
-.PARAMETER ProjectJson
+.PARAMETER ProjectJsonPath
 
 .PARAMETER PackageOutputDir
 
@@ -12,7 +12,7 @@
 Param(
     [Parameter(Mandatory=$true)] 
     [String]
-	$ProjectJson,
+	$ProjectJsonPath,
 
     [Parameter(Mandatory=$true)] 
     [String]
@@ -29,13 +29,13 @@ Param(
 try
 {
     Write-Output 'Parameters:'
-    Write-Output "--               project.json: $ProjectJson"
+    Write-Output "--               project.json: $ProjectJsonPath"
     Write-Output "--   Package Output Directory: $PackageOutputDir"
     Write-Output "-- Artifacts Output Directory: $ArtifactsOutputDir"
     Write-Output "--                    Version: $Version"
     Write-Output ''
 
-    & dotnet pack "$ProjectJson" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "rc-$Version" -c Release
+    & dotnet pack "$ProjectJsonPath" --output "$PackageOutputDir" --build-base-path "$ArtifactsOutputDir" --version-suffix "rc-$Version" -c Release
 
     $exitCode = 0
 }

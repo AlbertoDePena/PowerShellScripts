@@ -1,34 +1,34 @@
 ﻿<#
 .SYNOPSIS
   Generate NuGet package.
-.PARAMETER NugetExe
+.PARAMETER NugetExePath
 
-.PARAMETER Nuspec
+.PARAMETER NuspecPath
 
-.PARAMETER OutputDir
+.PARAMETER PackageOutputDir
 #>
 Param(
     [Parameter(Mandatory=$true)] 
     [String]
-	$NugetExe,
+	$NugetExePath,
 
     [Parameter(Mandatory=$true)] 
 	[String]
-	$Nuspec,
+	$NuspecPath,
 
     [Parameter(Mandatory=$true)] 
     [String]
-	$OutputDir
+	$PackageOutputDir
 )
 try
 {
     Write-Output 'Parameters:'
-    Write-Output "--            NuGet.exe: $NugetExe"
-    Write-Output "--               Nuspec: $Nuspec"
-    Write-Output "--     Output Directory: $OutputDir"
+    Write-Output "--            NuGet.exe: $NugetExePath"
+    Write-Output "--               Nuspec: $NuspecPath"
+    Write-Output "--     Output Directory: $PackageOutputDir"
     Write-Output ''
 
-    & "$NugetExe" pack "$Nuspec" -OutputDirectory "$OutputDir"
+    & "$NugetExePath" pack "$NuspecPath" -OutputDirectory "$PackageOutputDir"
 
     $exitCode = 0
 }
